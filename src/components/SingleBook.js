@@ -1,6 +1,6 @@
 const SingleBook = ({
   title,
-  author,
+  authors,
   cover,
   status = "none",
   changeBookCategory,
@@ -35,7 +35,7 @@ const SingleBook = ({
           <div className="book-shelf-changer">
             <select
               value={status}
-              onChange={(e) => changeBookCategory(e, title, author)}
+              onChange={(e) => changeBookCategory(e, title, authors)}
             >
               <option value="none" disabled>
                 Move to...
@@ -51,7 +51,7 @@ const SingleBook = ({
           </div>
         </div>
         <div className="book-title">{title}</div>
-        <div className="book-authors">{author}</div>
+        <div className="book-authors">{authors.join(", ")}</div>
       </div>
     </li>
   );

@@ -15,7 +15,7 @@ const Search = ({ allBooks, changeBookCategory }) => {
       const filteredBooks = allBooks.filter((book) => {
         if (
           book.title.includes(inputValue) ||
-          book.author.includes(inputValue)
+          book.authors.join(" ").includes(inputValue)
         ) {
           return book;
         }
