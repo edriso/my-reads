@@ -26,18 +26,18 @@ const SingleBook = ({
 
   return (
     <li>
-      <div className='book'>
-        <div className='book-top'>
+      <div className="book">
+        <div className="book-top">
           <div
-            className='book-cover'
+            className="book-cover"
             style={{ backgroundImage: `url("${cover}")` }}
           ></div>
-          <div className='book-shelf-changer'>
+          <div className="book-shelf-changer">
             <select
               value={status}
               onChange={(e) => changeBookCategory(e, title, author)}
             >
-              <option value='none' disabled>
+              <option value="none" disabled>
                 Move to...
               </option>
               {options.map((item) => {
@@ -50,8 +50,8 @@ const SingleBook = ({
             </select>
           </div>
         </div>
-        <div className='book-title'>{title}</div>
-        <div className='book-authors'>{author}</div>
+        <div className="book-title">{title}</div>
+        <div className="book-authors">{author}</div>
       </div>
     </li>
   );
