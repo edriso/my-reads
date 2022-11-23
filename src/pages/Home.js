@@ -2,19 +2,17 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Bookshelf from "../components/Bookshelf";
 
-const Home = ({ myBooks, changeBookCategory }) => {
+const Home = ({ myBooks, changeBookShelf }) => {
   const [currentList, setCurrentList] = useState([]);
   const [wantReadList, setWantReadList] = useState([]);
   const [readList, setReadList] = useState([]);
 
   useEffect(() => {
-    setCurrentList(
-      myBooks.filter((book) => book.status === "currentlyReading")
-    );
+    setCurrentList(myBooks.filter((book) => book.shelf === "currentlyReading"));
 
-    setWantReadList(myBooks.filter((book) => book.status === "wantToRead"));
+    setWantReadList(myBooks.filter((book) => book.shelf === "wantToRead"));
 
-    setReadList(myBooks.filter((book) => book.status === "read"));
+    setReadList(myBooks.filter((book) => book.shelf === "read"));
   }, [myBooks]);
 
   return (
@@ -27,19 +25,19 @@ const Home = ({ myBooks, changeBookCategory }) => {
         <Bookshelf
           title="Currently Reading"
           books={currentList}
-          changeBookCategory={changeBookCategory}
+          changeBookShelf={changeBookShelf}
         />
 
         <Bookshelf
           title="Want to Read"
           books={wantReadList}
-          changeBookCategory={changeBookCategory}
+          changeBookShelf={changeBookShelf}
         />
 
         <Bookshelf
           title="Read"
           books={readList}
-          changeBookCategory={changeBookCategory}
+          changeBookShelf={changeBookShelf}
         />
       </div>
 

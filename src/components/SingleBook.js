@@ -1,10 +1,4 @@
-const SingleBook = ({
-  title,
-  authors,
-  cover,
-  status = "none",
-  changeBookCategory,
-}) => {
+const SingleBook = ({ book, changeBookShelf }) => {
   const options = [
     {
       name: "Currently Reading",
@@ -28,14 +22,16 @@ const SingleBook = ({
     <li>
       <div className="book">
         <div className="book-top">
-          <div
-            className="book-cover"
-            style={{ backgroundImage: `url("${cover}")` }}
-          ></div>
+          {book.imageLinks && (
+            <div
+              className="book-cover"
+              style={{ backgroundImage: `url("${book.imageLinks.thumbnail}")` }}
+            ></div>
+          )}
           <div className="book-shelf-changer">
             <select
-              value={status}
-              onChange={(e) => changeBookCategory(e, title, authors)}
+              value={(book.shelf = "none")}
+              onChange={(e) => changeBookShelf(book, e.target.value)}
             >
               <option value="none" disabled>
                 Move to...
@@ -50,8 +46,10 @@ const SingleBook = ({
             </select>
           </div>
         </div>
-        <div className="book-title">{title}</div>
-        <div className="book-authors">{authors.join(", ")}</div>
+        <div className="book-title">{book.title}</div>
+        {book.authors && (
+          <div className="book-authors">By: {book.authors.join(", ")}</div>
+        )}
       </div>
     </li>
   );

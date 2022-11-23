@@ -1,28 +1,23 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import SingleBook from "../components/SingleBook";
+import * as BooksAPI from "../BooksAPI";
 
-const Search = ({ allBooks, changeBookCategory }) => {
+const Search = ({ allBooks, changeBookShelf }) => {
   const [searchInput, setSearchInput] = useState("");
   const [searchedBooks, setSearchedBooks] = useState([]);
 
-  const handleSearch = (e) => {
-    const inputValue = e.target.value;
+  const handleSearch = async (query) => {
+    setSearchInput(query);
 
-    setSearchInput(inputValue);
-
-    if (inputValue.trim()) {
-      const filteredBooks = allBooks.filter((book) => {
-        if (
-          book.title.includes(inputValue) ||
-          book.authors.join(" ").includes(inputValue)
-        ) {
-          return book;
+    if (query.trim()) {
+      await BooksAPI.search(query).then((results) => {
+        if (results.error) {
+          setSearchedBooks([]);
+        } else {
+          setSearchedBooks(results);
         }
-        return null;
       });
-
-      setSearchedBooks(filteredBooks);
     } else {
       setSearchedBooks([]);
     }
@@ -39,26 +34,27 @@ const Search = ({ allBooks, changeBookCategory }) => {
           <input
             type="text"
             value={searchInput}
-            onChange={(e) => handleSearch(e)}
+            onChange={(e) => handleSearch(e.target.value)}
             placeholder="Search by title, author, or ISBN"
           />
         </div>
       </div>
+
       <div className="search-books-results">
         <ol className="books-grid">
-          {searchedBooks.map((book, i) => {
+          {searchedBooks.map((book) => {
             return (
               <SingleBook
-                key={i}
-                {...book}
-                changeBookCategory={changeBookCategory}
+                key={book.id}
+                book={book}
+                changeBookShelf={changeBookShelf}
               />
             );
           })}
 
-          {!searchedBooks.length && searchInput && (
+          {!searchedBooks.length && searchInput.trim() && (
             <div>
-              <p>Couldn't find this book!</p>
+              <p>Couldn't find a result for '{searchInput}' !</p>
             </div>
           )}
         </ol>
