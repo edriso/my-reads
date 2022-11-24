@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import SingleBook from "../components/SingleBook";
 import * as BooksAPI from "../BooksAPI";
 
-const Search = ({ allBooks, changeBookShelf }) => {
+const Search = ({ myBooks, changeBookShelf }) => {
   const [searchInput, setSearchInput] = useState("");
   const [searchedBooks, setSearchedBooks] = useState([]);
 
@@ -43,10 +43,12 @@ const Search = ({ allBooks, changeBookShelf }) => {
       <div className="search-books-results">
         <ol className="books-grid">
           {searchedBooks.map((book) => {
+            let existedBook = myBooks.find((myBook) => myBook.id === book.id);
+
             return (
               <SingleBook
                 key={book.id}
-                book={book}
+                book={existedBook ? existedBook : book}
                 changeBookShelf={changeBookShelf}
               />
             );

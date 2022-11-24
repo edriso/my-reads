@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const SingleBook = ({ book, changeBookShelf }) => {
   const options = [
     {
@@ -22,15 +24,19 @@ const SingleBook = ({ book, changeBookShelf }) => {
     <li>
       <div className="book">
         <div className="book-top">
-          {book.imageLinks && (
-            <div
-              className="book-cover"
-              style={{ backgroundImage: `url("${book.imageLinks.thumbnail}")` }}
-            ></div>
-          )}
+          <Link to={`/book/${book.id}`}>
+            {book.imageLinks && (
+              <div
+                className="book-cover"
+                style={{
+                  backgroundImage: `url("${book.imageLinks.thumbnail}")`,
+                }}
+              ></div>
+            )}
+          </Link>
           <div className="book-shelf-changer">
             <select
-              value={(book.shelf = "none")}
+              value={book.shelf ? book.shelf : "none"}
               onChange={(e) => changeBookShelf(book, e.target.value)}
             >
               <option value="none" disabled>
