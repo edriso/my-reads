@@ -22,7 +22,7 @@ const BookDetails = () => {
       //   console.log(response);
     };
     selectedBook();
-  }, [id]);
+  }, [id, navigate]);
 
   return (
     <div className="book-details">
