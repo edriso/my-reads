@@ -10,8 +10,13 @@ const BookDetails = () => {
 
   useEffect(() => {
     const selectedBook = async () => {
-      const response = await BooksAPI.get(id);
-      setBook(response);
+      try {
+        const response = await BooksAPI.get(id);
+        setBook(response);
+      } catch (error) {
+        console.log(error);
+        navigate("/NotFound");
+      }
 
       // TEMPORARY
       //   console.log(response);
